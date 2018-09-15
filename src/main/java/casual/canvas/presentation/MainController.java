@@ -4,6 +4,7 @@ import casual.canvas.bl.BlFactory;
 import casual.canvas.bl.BlService;
 import casual.canvas.entity.Line;
 import casual.canvas.entity.Shape;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
@@ -58,15 +59,16 @@ public class MainController {
 
     @FXML
     private void stopDraw(){
-        displayedData.getDisplayedLines().add(new Shape(Color.BLACK, linesCache));
+        displayedData.getDisplayedShapes().add(new Shape(Color.BLACK, linesCache));
         linesCache.clear();
         isDrawing = false;
     }
 
     @FXML
     private void save(){
-        //TODO
-        blService.savePainting(null, null);
+        ObservableList<Shape> displayedShapes = displayedData.getDisplayedShapes();
+        List<Shape> shapes = new ArrayList<>(displayedShapes);
+        blService.savePainting(shapes, "demo.json");
     }
 
     @FXML
