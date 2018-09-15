@@ -1,9 +1,10 @@
 package casual.canvas.entity;
 
-import lombok.AllArgsConstructor;
+import javafx.scene.paint.Color;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,9 +13,17 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Shape {
 
+    protected Color color = Color.BLACK;//default
+
     protected List<Line> lines;
+
+    //deep copying
+    public Shape(Color color, List<Line> lines){
+        this.color = color;
+        this.lines = new ArrayList<>(lines.size());
+        this.lines.addAll(lines);
+    }
 
 }

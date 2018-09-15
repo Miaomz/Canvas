@@ -1,8 +1,13 @@
 package casual.canvas.entity;
 
-import lombok.*;
+import javafx.scene.paint.Color;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
+ * blue indicates the Circle
  * @author miaomuzhi
  * @since 2018/9/14
  */
@@ -19,7 +24,7 @@ public class Circle extends Shape {
     protected double radius;
 
     public Circle(Shape s){
-        super(s.getLines());
+        super(Color.BLUE, s.getLines());
         double sumX = 0;
         double sumY = 0;
         for (Line line : lines) {//only record the start point
