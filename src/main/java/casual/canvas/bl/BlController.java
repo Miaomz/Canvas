@@ -1,5 +1,6 @@
 package casual.canvas.bl;
 
+import casual.canvas.data.DataService;
 import casual.canvas.entity.Shape;
 import casual.canvas.util.ResultMessage;
 
@@ -11,24 +12,15 @@ import java.util.List;
  */
 public class BlController implements BlService {
 
-    private static BlController blController;
-
-    private BlController(){}
-
-    public static BlController getBlController() {
-        if (blController == null){
-            blController = new BlController();
-        }
-        return blController;
-    }
+    private DataService dataService;
 
     @Override
     public ResultMessage savePainting(List<Shape> shapes, String fileName) {
-        return null;
+        return dataService.savePainting(shapes, fileName);
     }
 
     @Override
     public List<Shape> loadPainting(String fileName) {
-        return null;
+        return dataService.loadPainting(fileName);
     }
 }

@@ -1,5 +1,7 @@
 package casual.canvas.presentation;
 
+import casual.canvas.bl.BlFactory;
+import casual.canvas.bl.BlService;
 import casual.canvas.entity.Line;
 import casual.canvas.entity.Shape;
 import javafx.fxml.FXML;
@@ -17,6 +19,7 @@ import java.util.List;
 public class MainController {
 
     private DisplayedData displayedData = DisplayedData.getInstance();
+    private BlService blService = BlFactory.getInstance().getBlService();
 
     @FXML
     private Canvas canvas;
@@ -27,7 +30,7 @@ public class MainController {
 
     //data to draw shape
     private boolean isDrawing = false;
-    private List<Line> linesCache = new ArrayList<>(1000);//average capacity
+    private List<Line> linesCache = new ArrayList<>(100);//average capacity
 
     public void initialize(){
         canvas.getGraphicsContext2D().setStroke(Color.BLACK);
@@ -62,7 +65,8 @@ public class MainController {
 
     @FXML
     private void save(){
-
+        //TODO
+        blService.savePainting(null, null);
     }
 
     @FXML
