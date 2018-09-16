@@ -5,6 +5,7 @@ import casual.canvas.data.DataService;
 import casual.canvas.entity.Shape;
 import casual.canvas.util.ResultMessage;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -23,5 +24,10 @@ public class BlController implements BlService {
     @Override
     public List<Shape> loadPainting(String fileName) {
         return dataService.loadPainting(fileName);
+    }
+
+    @Override
+    public List<Shape> loadPainting(File file) {
+        return dataService.loadPainting(file);
     }
 }

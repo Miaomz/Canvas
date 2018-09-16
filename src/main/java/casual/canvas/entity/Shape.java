@@ -1,6 +1,6 @@
 package casual.canvas.entity;
 
-import javafx.scene.paint.Color;
+import casual.canvas.util.Color;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

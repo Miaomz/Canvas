@@ -5,6 +5,7 @@ import casual.canvas.util.JsonUtil;
 import casual.canvas.util.LoggerUtil;
 import casual.canvas.util.PathUtil;
 import casual.canvas.util.ResultMessage;
+import com.alibaba.fastjson.JSONException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -33,14 +34,38 @@ public class DataServiceImpl implements DataService{
     }
 
     @Override
-    public List<Shape> loadPainting(String fileName) {
-        if (fileName == null || fileName.isEmpty()){
+    public List<Shape> loadPainting(String fileName){
+        if (fileName == null || fileName.isEmpty()){//preconditions
             return new ArrayList<>();
         }
 
         String path = PathUtil.getFilePath() + SLASH + fileName;
         String content = readFile(path);
+        try {
+            List<Shape> shapes = JsonUtil.toArray(content, Shape.class);
+            if (shapes == null){//compare to null, empty list is better
+                shapes = new ArrayList<>();
+            }
+            return shapes;
+        }catch (JSONException e){
+            LoggerUtil.getLogger().warning(e);
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public List<Shape> loadPainting(File file) {
+        if (!file.exists()){
+            LoggerUtil.getLogger().info(new IOException("file to be loaded doesn't exist"));
+            return new ArrayList<>();
+        }
+
+        String content = readFile(file.getPath());
         List<Shape> shapes = JsonUtil.toArray(content, Shape.class);
+
+        if (shapes == null){
+            return new ArrayList<>();
+        }
         return shapes;
     }
 
