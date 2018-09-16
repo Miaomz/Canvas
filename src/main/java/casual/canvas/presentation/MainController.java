@@ -35,6 +35,9 @@ public class MainController {
     private Canvas canvas;
 
 
+    /**
+     * initialize function called by javafx
+     */
     public void initialize(){
         canvas.getGraphicsContext2D().setStroke(Color.BLACK.transform());
         canvas.getGraphicsContext2D().setLineWidth(1);
@@ -50,7 +53,7 @@ public class MainController {
      * synchronize the canvas with displayed data
      */
     private void sync(){
-        revert();//clear the canvas first
+        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());//clear the canvas first
 
         ObservableList<Shape> shapes = displayedData.getDisplayedShapes();
         if (shapes == null || shapes.isEmpty()){
@@ -99,7 +102,8 @@ public class MainController {
 
         if (file != null){
             List<Shape> shapes = blService.loadPainting(file.getName());
-            displayedData.setDisplayedShapes(FXCollections.observableArrayList(shapes));
+            displayedData.getDisplayedShapes().clear();
+            displayedData.getDisplayedShapes().addAll(FXCollections.observableArrayList(shapes));
             displayedData.setFileName(file.getName());
         }
     }
@@ -118,10 +122,7 @@ public class MainController {
 
     @FXML
     private void saveAs(){
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose the file");
-        File file = fileChooser.showOpenDialog(canvas.getScene().getWindow());
-        System.out.println(file);
+        //TODO
     }
 
     @FXML
@@ -131,7 +132,7 @@ public class MainController {
 
     @FXML
     private void revert(){
-        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        displayedData.getDisplayedShapes().clear();
     }
 
     @FXML

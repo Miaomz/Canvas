@@ -16,7 +16,7 @@ import lombok.Setter;
 public class DisplayedData {
 
     private static DisplayedData displayedData;
-    private ObservableList<Shape> displayedShapes = FXCollections.observableArrayList();
+    private final ObservableList<Shape> displayedShapes = FXCollections.observableArrayList();
     private String fileName;
 
     private DisplayedData(){}

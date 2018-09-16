@@ -25,6 +25,7 @@ public class Circle extends Shape {
 
     public Circle(Shape s){
         super(Color.BLUE, s.getLines());
+
         double sumX = 0;
         double sumY = 0;
         for (Line line : lines) {//only record the start point
