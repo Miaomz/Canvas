@@ -6,6 +6,8 @@ import javafx.collections.ObservableList;
 import lombok.Getter;
 import lombok.Setter;
 
+import static casual.canvas.util.ConstantString.EXTENSION;
+
 
 /**
  * @author miaomuzhi
@@ -17,7 +19,7 @@ public class DisplayedData {
 
     private static DisplayedData displayedData;
     private final ObservableList<Shape> displayedShapes = FXCollections.observableArrayList();
-    private String fileName;
+    private String fileName = "unnamed" + EXTENSION;
 
     private DisplayedData(){}
 

@@ -14,7 +14,11 @@ public enum ResultMessage {
      */
     FAILURE,
     /**
-     * duplicate file names
+     * file names with wrong extension
      */
-    DUPLICATE
+    WRONG_EXT,
+    /**
+     * absence of arguments
+     */
+    ARG_ABSENT
 }

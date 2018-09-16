@@ -8,5 +8,7 @@ public class ConstantString {
 
     public static final String SLASH = "/";
 
+    public static final String EXTENSION = "*.mcv";
+
     private ConstantString(){}
 }

@@ -1,4 +1,4 @@
-package casual.canvas.presentation;
+package casual.canvas;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

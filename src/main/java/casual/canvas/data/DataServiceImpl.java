@@ -11,6 +11,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static casual.canvas.util.ConstantString.EXTENSION;
 import static casual.canvas.util.ConstantString.SLASH;
 
 /**
@@ -21,11 +22,11 @@ public class DataServiceImpl implements DataService{
 
     @Override
     public ResultMessage savePainting(List<Shape> shapes, String fileName) {
-        if (shapes == null){
-            return ResultMessage.FAILURE;
+        if (shapes == null || fileName == null || fileName.isEmpty()){
+            return ResultMessage.ARG_ABSENT;
         }
-        if (fileName == null || fileName.isEmpty()){
-            return ResultMessage.FAILURE;
+        if (!fileName.endsWith(EXTENSION)){
+            return ResultMessage.WRONG_EXT;
         }
 
         String content = JsonUtil.toJson(shapes);
