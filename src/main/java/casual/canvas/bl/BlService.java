@@ -36,4 +36,10 @@ public interface BlService {
      * @return all shapes stored, null if it fails to load
      */
     List<Shape> loadPainting(File file);
+
+    /**
+     * get recent files in the default dir
+     * @return recent files, decreasing by date
+     */
+    List<File> getRecentFiles();
 }

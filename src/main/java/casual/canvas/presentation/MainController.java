@@ -11,9 +11,11 @@ import casual.canvas.util.ResultMessage;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -37,6 +39,9 @@ public class MainController {
 
     @FXML
     private Canvas canvas;
+
+    @FXML
+    private Menu openRecent;
 
     //these menu items will be managed by other classes
     @FXML
@@ -152,14 +157,33 @@ public class MainController {
                 .add(new FileChooser.ExtensionFilter("MyCanvas Files","*.mcv"));//ext of this app is '.mcv'
         fileChooser.setInitialDirectory(new File(PathUtil.getFilePath()));
         File file = fileChooser.showOpenDialog(canvas.getScene().getWindow());
-
-        if (file != null){
-            List<Shape> shapes = blService.loadPainting(file);
-            displayedData.getDisplayedShapes().clear();
-            displayedData.getDisplayedShapes().addAll(FXCollections.observableArrayList(shapes));
-            mediator.changeFileName(file.getName());
-        }
+        loadIntoCanvas(file);
     }
+
+    /**
+     * choose recent files and then open it
+     */
+    @FXML
+    private void openRecent(){
+        List<File> fileList = blService.getRecentFiles();
+        for (File file : fileList) {//preconditions
+            if (file == null || file.getName().isEmpty()){
+                LoggerUtil.getLogger().warning(new Exception("bad files contained"));
+                return;
+            }
+        }
+
+        List<MenuItem> menuItems = new ArrayList<>(fileList.size());
+        fileList.forEach(file -> {
+            MenuItem item = new MenuItem(file.getName());
+            item.setOnAction((ActionEvent event) -> loadIntoCanvas(file));
+            menuItems.add(item);
+        });
+        openRecent.getItems().clear();
+        openRecent.getItems().addAll(menuItems);
+        openRecent.show();
+    }
+
 
     /**
      * save a file
@@ -217,12 +241,25 @@ public class MainController {
 
     @FXML
     private void preference(){
-        Popup.showPopup("TBD", Color.BLACK);
+        Popup.showPopup("TODO", Color.BLACK);
     }
 
 
     @FXML
     private void quit(){
         System.exit(0);
+    }
+
+    /**
+     * utility function
+     * @param file .mcv file
+     */
+    private void loadIntoCanvas(File file){
+        if (file != null){
+            List<Shape> shapes = blService.loadPainting(file);
+            displayedData.getDisplayedShapes().clear();
+            displayedData.getDisplayedShapes().addAll(FXCollections.observableArrayList(shapes));
+            mediator.changeFileName(file.getName());
+        }
     }
 }

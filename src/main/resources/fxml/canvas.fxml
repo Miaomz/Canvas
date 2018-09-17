@@ -10,7 +10,7 @@
         <Menu mnemonicParsing="false" text="File">
             <MenuItem fx:id="createItem" mnemonicParsing="false" text="New" onAction="#create"/>
             <MenuItem fx:id="openItem" mnemonicParsing="false" text="Open…" onAction="#open"/>
-            <Menu mnemonicParsing="false" text="Open Recent" />
+            <Menu fx:id="openRecent" mnemonicParsing="false" text="Open Recent" onAction="#openRecent"/>
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="saveItem" mnemonicParsing="false" text="Save" onAction="#save" disable="true"/>
             <MenuItem fx:id="saveAsItem" mnemonicParsing="false" text="Save As…" onAction="#saveAs" disable="true"/>

@@ -9,6 +9,8 @@ import com.alibaba.fastjson.JSONException;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static casual.canvas.util.ConstantString.EXTENSION;
@@ -68,6 +70,27 @@ public class DataServiceImpl implements DataService{
             return new ArrayList<>();
         }
         return shapes;
+    }
+
+    @Override
+    public List<File> getRecentFiles() {
+        File file = new File(PathUtil.getFilePath());
+        if (file.isDirectory()){
+            File[] files = file.listFiles((File dir, String name) -> name.endsWith(EXTENSION));
+            if (files == null || files.length == 0){
+                return new ArrayList<>();
+            }
+
+            List<File> fileList = new ArrayList<>(Arrays.asList(files));
+            fileList.sort((File o1, File o2) ->
+                    (int)((o1.lastModified() - o2.lastModified()) / Math.abs(o1.lastModified() - o2.lastModified())));
+            Collections.reverse(fileList);
+            return fileList;
+
+        } else {
+            LoggerUtil.getLogger().warning(new IOException("default folder is not directory"));
+            return new ArrayList<>();
+        }
     }
 
     private ResultMessage writeFile(String path, String content) {

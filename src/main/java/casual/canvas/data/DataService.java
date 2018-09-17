@@ -17,4 +17,6 @@ public interface DataService {
     List<Shape> loadPainting(String fileName);
 
     List<Shape> loadPainting(File file);
+
+    List<File> getRecentFiles();
 }

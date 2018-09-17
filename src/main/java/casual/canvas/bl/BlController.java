@@ -30,4 +30,9 @@ public class BlController implements BlService {
     public List<Shape> loadPainting(File file) {
         return dataService.loadPainting(file);
     }
+
+    @Override
+    public List<File> getRecentFiles() {
+        return dataService.getRecentFiles();
+    }
 }
