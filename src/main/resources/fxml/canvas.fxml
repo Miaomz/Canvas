@@ -8,23 +8,21 @@
       fx:controller="casual.canvas.presentation.MainController">
     <MenuBar VBox.vgrow="NEVER">
         <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" text="New" onAction="#create"/>
-            <MenuItem mnemonicParsing="false" text="Open…" onAction="#open"/>
+            <MenuItem fx:id="createItem" mnemonicParsing="false" text="New" onAction="#create"/>
+            <MenuItem fx:id="openItem" mnemonicParsing="false" text="Open…" onAction="#open"/>
             <Menu mnemonicParsing="false" text="Open Recent" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Save" onAction="#save" disable="true"/>
-            <MenuItem mnemonicParsing="false" text="Save As…" onAction="#saveAs"/>
-            <MenuItem mnemonicParsing="false" text="Revert" onAction="#revert"/>
+            <MenuItem fx:id="saveItem" mnemonicParsing="false" text="Save" onAction="#save" disable="true"/>
+            <MenuItem fx:id="saveAsItem" mnemonicParsing="false" text="Save As…" onAction="#saveAs" disable="true"/>
+            <MenuItem fx:id="revertItem" mnemonicParsing="false" text="Revert" onAction="#revert" disable="true"/>
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Preferences…" onAction="#preference"/>
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Quit" onAction="#quit"/>
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
-            <MenuItem mnemonicParsing="false" text="Undo" disable="true"/>
-            <MenuItem mnemonicParsing="false" text="Redo" disable="true"/>
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
+            <MenuItem fx:id="undoItem" mnemonicParsing="false" text="Undo"/>
+            <MenuItem fx:id="redoItem" mnemonicParsing="false" text="Redo"/>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
             <MenuItem mnemonicParsing="false" text="About MyCanvas" />

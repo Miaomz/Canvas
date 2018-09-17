@@ -24,16 +24,16 @@ public interface BlService {
     ResultMessage savePainting(List<Shape> shapes, String fileName);
 
     /**
-     *
-     * @param fileName
-     * @return
+     * load painting
+     * @param fileName file name, including extension
+     * @return all shapes stored, null if it fails to load
      */
     List<Shape> loadPainting(String fileName);
 
     /**
-     *
-     * @param file
-     * @return
+     * load painting
+     * @param file File object
+     * @return all shapes stored, null if it fails to load
      */
     List<Shape> loadPainting(File file);
 }

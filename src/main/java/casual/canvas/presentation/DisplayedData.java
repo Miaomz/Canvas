@@ -19,7 +19,7 @@ public class DisplayedData {
 
     private static DisplayedData displayedData;
     private final ObservableList<Shape> displayedShapes = FXCollections.observableArrayList();
-    private String fileName = "unnamed" + EXTENSION;
+    private String fileName =  "unnamed" + EXTENSION;
 
     private DisplayedData(){}
 
