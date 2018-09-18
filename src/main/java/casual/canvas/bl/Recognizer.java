@@ -136,7 +136,7 @@ class Recognizer {
 
         List<Point> points = new ArrayList<>(Collections.singleton(new Point(startX, startY)));
         double slope = (double)(endY - startY) / (endX - startX);
-        int direct = (startX < startY ? 1 : -1);//direct means increase or decrease in x axis from start to end point
+        int direct = (startX < endX ? 1 : -1);//direct means increase or decrease in x axis from start to end point
 
         int lastY = startY;
         for (int i = 1; i < abs(endX - startX); i++) {//end point is not included
@@ -181,6 +181,12 @@ class Recognizer {
         int y;
 
         Point(int x, int y){
+            if (x < 0 || x >= MAT_LENGTH || y < 0 || y >= MAT_LENGTH){
+                LoggerUtil.getLogger().warning(new Exception("Point out of range"));
+                this.x = 0;
+                this.y = 0;
+            }
+
             this.x = x;
             this.y = y;
         }

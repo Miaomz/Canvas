@@ -39,7 +39,7 @@ public class RecognizerTest {
 
     @Test
     public void getImageFromShapeTest1() throws Exception{
-        File file = new File(getClass().getResource("/demo.mcv").toURI());
+        File file = new File(getClass().getResource("/third.mcv").toURI());
         List<Shape> shapes = dataService.loadPainting(file);
         int[][] image = recognizer.getImageFromShape(shapes.get(0));
         for (int i = 0; i < image.length; i++) {
@@ -59,7 +59,7 @@ public class RecognizerTest {
     public void normalizeLinesTest() throws Exception{
         Method method = Recognizer.class.getDeclaredMethod("normalizeLines", Shape.class);
         method.setAccessible(true);
-        File file = new File(getClass().getResource("/demo.mcv").toURI());
+        File file = new File(getClass().getResource("/third.mcv").toURI());
         List<Shape> shapes = dataService.loadPainting(file);
         List<Line> lines = (List<Line>)method.invoke(recognizer, shapes.get(0));
 
