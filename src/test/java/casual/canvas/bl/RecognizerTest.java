@@ -39,9 +39,9 @@ public class RecognizerTest {
 
     @Test
     public void getImageFromShapeTest1() throws Exception{
-        File file = new File(getClass().getResource("/another.mcv").toURI());
+        File file = new File(getClass().getResource("/demo.mcv").toURI());
         List<Shape> shapes = dataService.loadPainting(file);
-        int[][] image = recognizer.getImageFromShape(shapes.get(1));
+        int[][] image = recognizer.getImageFromShape(shapes.get(0));
         for (int i = 0; i < image.length; i++) {
             for (int j = 0; j < image[0].length; j++) {
                 if (image[i][j] == 1){

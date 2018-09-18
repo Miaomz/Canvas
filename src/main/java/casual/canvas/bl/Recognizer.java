@@ -87,10 +87,10 @@ class Recognizer {
         }
 
         for (Line line : lines) {
-            int startX = (MAT_LENGTH-1) * (int)line.getStartX();
-            int endX = (MAT_LENGTH-1) * (int)line.getEndX();
-            int startY = (MAT_LENGTH-1) * (int)line.getStartY();
-            int endY = (MAT_LENGTH-1) * (int)line.getEndY();
+            int startX = (int)((MAT_LENGTH-1) * line.getStartX());
+            int endX = (int)((MAT_LENGTH-1) * line.getEndX());
+            int startY = (int)((MAT_LENGTH-1) * line.getStartY());
+            int endY = (int)((MAT_LENGTH-1) * line.getEndY());
 
             List<Point> points = getPointsInPath(startX, endX, startY, endY);
             for (Point point : points) {
