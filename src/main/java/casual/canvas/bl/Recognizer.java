@@ -35,8 +35,26 @@ class Recognizer {
     }
 
     List<Shape> recognizeShapes(List<Shape> shapes) {
+        List<Shape> modifiedShapes = new ArrayList<>(shapes.size());
+        for (Shape shape : shapes) {
+            Class c = recognizeShape(shape);
+            switch (c.getSimpleName()){
+                case "Circle":
+                    modifiedShapes.add(new Circle(shape));
+                    break;
+                case "Rectangle":
+                    modifiedShapes.add(new Rectangle(shape));
+                    break;
+                case "Triangle":
+                    modifiedShapes.add(new Triangle(shape));
+                    break;
 
-        return null;
+                    default:
+                        modifiedShapes.add(shape);
+                        break;
+            }
+        }
+        return modifiedShapes;
     }
 
     Class recognizeShape(Shape shape) {
@@ -46,7 +64,7 @@ class Recognizer {
             Instances unlabeled = buildInstances(1);
             instance.setDataset(unlabeled);
             imageToInstance(instance, image, Circle.class.getSimpleName());//set circle as default value to avoid null pointer
-            double classValue = classifier.classifyInstance(instance);//we could use probability to set some example as Shape
+            double classValue = classifier.classifyInstance(instance);
             String classType = instance.classAttribute().value((int)classValue);
             return Class.forName("casual.canvas.entity.".concat(classType));
         } catch(Exception e){
