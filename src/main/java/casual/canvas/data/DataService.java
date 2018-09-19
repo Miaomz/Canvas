@@ -2,6 +2,7 @@ package casual.canvas.data;
 
 import casual.canvas.entity.Shape;
 import casual.canvas.util.ResultMessage;
+import weka.classifiers.Classifier;
 
 import java.io.File;
 import java.util.List;
@@ -19,4 +20,8 @@ public interface DataService {
     List<Shape> loadPainting(File file);
 
     List<File> getRecentFiles();
+
+    ResultMessage saveClassifier(Classifier classifier);
+
+    Classifier loadClassifier();
 }

@@ -1,9 +1,18 @@
 package casual.canvas.bl;
 
-import casual.canvas.entity.Line;
-import casual.canvas.entity.Shape;
+import casual.canvas.data.DataFactory;
+import casual.canvas.data.DataService;
+import casual.canvas.entity.*;
 import casual.canvas.util.LoggerUtil;
+import weka.classifiers.Classifier;
+import weka.classifiers.meta.MultiClassClassifier;
+import weka.core.Attribute;
+import weka.core.DenseInstance;
+import weka.core.Instance;
+import weka.core.Instances;
 
+import java.io.File;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,16 +26,73 @@ import static java.lang.Math.*;
  */
 class Recognizer {
 
-    private static final int MAT_LENGTH = 300;
+    private static final int MAT_LENGTH = 100;
+    private DataService dataService = DataFactory.getDataFactory().getDataService();
+    private Classifier classifier = new MultiClassClassifier();
+
+    Recognizer(){
+        train();
+    }
 
     List<Shape> recognizeShapes(List<Shape> shapes) {
+
         return null;
     }
 
     Class recognizeShape(Shape shape) {
-        int[][] image = getImageFromShape(shape);
+        try {
+            int[][] image = getImageFromShape(shape);
+            Instance instance = new DenseInstance(MAT_LENGTH * MAT_LENGTH + 1);
+            Instances unlabeled = buildInstances(1);
+            instance.setDataset(unlabeled);
+            imageToInstance(instance, image, Circle.class.getSimpleName());//set circle as default value to avoid null pointer
+            double classValue = classifier.classifyInstance(instance);//we could use probability to set some example as Shape
+            String classType = instance.classAttribute().value((int)classValue);
+            return Class.forName("casual.canvas.entity.".concat(classType));
+        } catch(Exception e){
+            LoggerUtil.getLogger().info(e);
+            return Shape.class;
+        }
+    }
 
-        return null;
+    private void train(){
+        Classifier savedClassifier = dataService.loadClassifier();
+        if (savedClassifier != null){
+            this.classifier = savedClassifier;
+            return;
+        }
+
+        //load data
+        File triFile;
+        File cirFile;
+        File rectFile;
+        try {
+             triFile = new File(getClass().getResource("/dataset/triangle.mcv").toURI());
+             cirFile = new File(getClass().getResource("/dataset/circle.mcv").toURI());
+             rectFile = new File(getClass().getResource("/dataset/rectangle.mcv").toURI());
+        } catch (URISyntaxException e){
+            LoggerUtil.getLogger().warning(e);
+            return;
+        }
+
+        List<Shape> triangles = dataService.loadPainting(triFile);
+        List<Shape> circles = dataService.loadPainting(cirFile);
+        List<Shape> rectangles = dataService.loadPainting(rectFile);
+
+        //build instances
+        Instances instances = buildInstances(triangles.size()+circles.size()+rectangles.size());
+
+        //build instance
+        buildDataSet(instances, triangles, Triangle.class.getSimpleName());
+        buildDataSet(instances, circles, Circle.class.getSimpleName());
+        buildDataSet(instances, rectangles, Rectangle.class.getSimpleName());
+
+        try {
+            classifier.buildClassifier(instances);
+            dataService.saveClassifier(classifier);
+        } catch (Exception e){
+            LoggerUtil.getLogger().warning(e);
+        }
     }
 
     /**
@@ -119,7 +185,7 @@ class Recognizer {
         if (startX == endX && startY == endY){//if there is only one point in the line
             return new ArrayList<>(Collections.singleton(new Point(startX,  startY)));
         }
-        if (abs(startX - endX) <= 1 || abs(startY - endY) <= 1){//only two points
+        if (abs(startX - endX) <= 1 && abs(startY - endY) <= 1){//only two points
             return new ArrayList<>(Arrays.asList(new Point(startX, startY), new Point(endX, endY)));
         }
         if (startX == endX){//vertical line
@@ -172,6 +238,52 @@ class Recognizer {
             }
         }
     }
+
+    /**
+     * build Instances object
+     * @param capacity initial capacity
+     * @return instances which is the header of data set
+     */
+    private Instances buildInstances(int capacity){
+        List<String> biNominal = new ArrayList<>(Arrays.asList("zero", "one"));
+        ArrayList<Attribute> attributes = new ArrayList<>(MAT_LENGTH*MAT_LENGTH);
+        for (Integer i = 0; i < MAT_LENGTH*MAT_LENGTH; i++) {
+            attributes.add(new Attribute(i.toString(), biNominal));
+        }
+
+        List<String> classNominal = new ArrayList<>(
+                Arrays.asList(Circle.class.getSimpleName(), Triangle.class.getSimpleName(), Rectangle.class.getSimpleName()));
+        Attribute classAttr = new Attribute("class", classNominal);
+
+        attributes.add(classAttr);
+        Instances instances = new Instances("theDataSet", attributes, capacity);
+        instances.setClass(classAttr);//only set the index
+        return instances;
+    }
+
+    /**
+     * add instance objects to a certain instances(data set)
+     * @param instances built instances
+     * @param shapes list of shapes
+     * @param className class label, which is simple class name
+     */
+    private void buildDataSet(Instances instances, List<Shape> shapes, String className){
+        for (Shape shape: shapes) {
+            Instance instance = new DenseInstance(MAT_LENGTH*MAT_LENGTH + 1);
+            instance.setDataset(instances);
+            imageToInstance(instance, getImageFromShape(shape), className);
+            instances.add(instance);
+        }
+    }
+
+    private void imageToInstance(Instance instance, int[][] image, String className){
+        for (Integer i = 0; i < MAT_LENGTH*MAT_LENGTH; i++) {
+            instance.setValue(i, image[i/MAT_LENGTH][i%MAT_LENGTH] == 1 ? "one" : "zero");
+        }
+        instance.setValue(MAT_LENGTH*MAT_LENGTH, className);
+    }
+
+
 
     /**
      * struct to store point

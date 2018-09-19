@@ -2,8 +2,7 @@ package casual.canvas.bl;
 
 import casual.canvas.data.DataService;
 import casual.canvas.data.DataServiceImpl;
-import casual.canvas.entity.Line;
-import casual.canvas.entity.Shape;
+import casual.canvas.entity.*;
 import casual.canvas.util.Color;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +12,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 
 /**
@@ -71,5 +72,33 @@ public class RecognizerTest {
         });
         List<Shape> result = new ArrayList<>(Collections.singleton(new Shape(Color.BLACK, lines)));
         dataService.savePainting(result, "result.mcv");
+    }
+
+    @Test
+    public void trainTest() throws Exception{
+        Method method = Recognizer.class.getDeclaredMethod("train");
+        method.setAccessible(true);
+        method.invoke(recognizer);
+    }
+
+    @Test
+    public void recognizeShapeTest() throws Exception{
+        File file = new File(getClass().getResource("/test.mcv").toURI());
+        List<Shape> shapes = dataService.loadPainting(file);
+        assertEquals(Triangle.class, recognizer.recognizeShape(shapes.get(0)));
+    }
+
+    @Test
+    public void recognizeShapeTest2() throws Exception{
+        File file = new File(getClass().getResource("/test2.mcv").toURI());
+        List<Shape> shapes = dataService.loadPainting(file);
+        assertEquals(Circle.class, recognizer.recognizeShape(shapes.get(0)));
+    }
+
+    @Test
+    public void recognizeShapeTest3() throws Exception{
+        File file = new File(getClass().getResource("/Rectangle.mcv").toURI());
+        List<Shape> shapes = dataService.loadPainting(file);
+        assertEquals(Rectangle.class, recognizer.recognizeShape(shapes.get(0)));
     }
 }

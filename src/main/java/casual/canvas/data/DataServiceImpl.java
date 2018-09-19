@@ -6,8 +6,11 @@ import casual.canvas.util.LoggerUtil;
 import casual.canvas.util.PathUtil;
 import casual.canvas.util.ResultMessage;
 import com.alibaba.fastjson.JSONException;
+import weka.classifiers.Classifier;
+import weka.core.SerializationHelper;
 
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -90,6 +93,34 @@ public class DataServiceImpl implements DataService{
         } else {
             LoggerUtil.getLogger().warning(new IOException("default folder is not directory"));
             return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public ResultMessage saveClassifier(Classifier classifier) {
+        try {
+            File file = new File(getClass().getResource("/model").getPath() + SLASH + "classifier.model");
+            SerializationHelper.write(file.getPath(), classifier);
+            return ResultMessage.SUCCESS;
+        } catch (Exception e){
+            LoggerUtil.getLogger().warning(e);
+            return ResultMessage.FAILURE;
+        }
+    }
+
+    @Override
+    public Classifier loadClassifier() {
+        try {
+            URL url = getClass().getResource("/model/classifier.model");
+            if (url == null){//the file doesn't exist in first call
+                return null;
+            }
+
+            File file = new File(url.toURI());
+            return (Classifier) SerializationHelper.read(file.getPath());
+        } catch (Exception e){
+            LoggerUtil.getLogger().info(e);
+            return null;
         }
     }
 
