@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 public class CircleTest {
 
     @Test
-    public void classTest() throws Exception{
+    public void classTest(){
         Shape shape = new Circle(new Shape());
         assertEquals(Circle.class, shape.getClass());
     }

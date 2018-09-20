@@ -1,9 +1,11 @@
-package casual.canvas.presentation;
+package casual.canvas.presentation.mainui;
 
 import casual.canvas.bl.BlFactory;
 import casual.canvas.bl.BlService;
 import casual.canvas.entity.Line;
 import casual.canvas.entity.Shape;
+import casual.canvas.presentation.fileui.FileController;
+import casual.canvas.presentation.utilui.Popup;
 import casual.canvas.util.Color;
 import casual.canvas.util.LoggerUtil;
 import casual.canvas.util.PathUtil;
@@ -88,14 +90,7 @@ public class MainController {
 
         GraphicsContext context = canvas.getGraphicsContext2D();
         for (Shape shape : shapes) {//draw shape
-            if (shape.getLines() == null || shape.getLines().isEmpty()){//check
-                continue;
-            }
-
-            context.setStroke(shape.getColor().transform());
-            for (Line line : shape.getLines()) {
-                context.strokeLine(line.getStartX(), line.getStartY(), line.getEndX(), line.getEndY());
-            }
+            shape.draw(context);
         }
     }
 

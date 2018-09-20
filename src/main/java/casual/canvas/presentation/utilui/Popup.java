@@ -1,4 +1,4 @@
-package casual.canvas.presentation;
+package casual.canvas.presentation.utilui;
 
 import casual.canvas.util.Color;
 import casual.canvas.util.LoggerUtil;

@@ -1,6 +1,7 @@
 package casual.canvas.entity;
 
 import casual.canvas.util.Color;
+import javafx.scene.canvas.GraphicsContext;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,5 +35,11 @@ public class Circle extends Shape {
         }
         centerX = sumX / lines.size();
         centerY = sumY / lines.size();
+    }
+
+    @Override
+    public void draw(GraphicsContext context) {
+        context.setStroke(color.transform());
+        context.strokeOval(centerX-radius, centerY-radius, radius, radius);
     }
 }

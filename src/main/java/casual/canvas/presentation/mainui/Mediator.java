@@ -1,5 +1,6 @@
-package casual.canvas.presentation;
+package casual.canvas.presentation.mainui;
 
+import casual.canvas.presentation.fileui.FileController;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.MenuItem;
 import lombok.AllArgsConstructor;

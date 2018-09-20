@@ -1,4 +1,4 @@
-package casual.canvas.presentation;
+package casual.canvas.presentation.mainui;
 
 import casual.canvas.entity.Line;
 import casual.canvas.entity.Shape;

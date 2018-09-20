@@ -1,4 +1,4 @@
-package casual.canvas.presentation;
+package casual.canvas.presentation.fileui;
 
 import casual.canvas.util.LoggerUtil;
 import javafx.fxml.FXML;
@@ -38,7 +38,7 @@ public class FileController {
             stage.initStyle(StageStyle.UTILITY);
             stage.setScene(scene);
 
-            loader.<FileController>getController().setStrings(memorySpace);
+            loader.<FileController>getController().strings = memorySpace;
 
             stage.showAndWait();
         } catch (IOException e){
@@ -62,13 +62,5 @@ public class FileController {
         }
         strings.add(input);
         ((Stage)inputField.getScene().getWindow()).close();
-    }
-
-    public List<String> getStrings() {
-        return strings;
-    }
-
-    public void setStrings(List<String> strings) {
-        this.strings = strings;
     }
 }

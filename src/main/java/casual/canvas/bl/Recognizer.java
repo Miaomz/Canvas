@@ -24,6 +24,7 @@ import static java.lang.Math.*;
  * @author miaomuzhi
  * @since 2018/9/17
  */
+@SuppressWarnings("ALL")
 class Recognizer {
 
     private static final int MAT_LENGTH = 100;
