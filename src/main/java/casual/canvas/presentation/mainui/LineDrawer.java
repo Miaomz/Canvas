@@ -14,7 +14,7 @@ import java.util.List;
  * @author miaomuzhi
  * @since 2018/9/16
  */
-class Drawer {
+class LineDrawer {
     //data to draw a line
     private double startX;
     private double startY;

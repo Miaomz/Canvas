@@ -20,8 +20,6 @@ public class Rectangle extends Shape{
 
     public Rectangle(Shape shape){
         super(Color.RED, shape.getLines());
-
-        //TODO
     }
 
 }

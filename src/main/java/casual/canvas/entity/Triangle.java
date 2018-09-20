@@ -25,6 +25,5 @@ public class Triangle extends Shape{
     public Triangle(Shape shape){
         super(Color.GREEN, shape.getLines());
 
-        //TODO
     }
 }

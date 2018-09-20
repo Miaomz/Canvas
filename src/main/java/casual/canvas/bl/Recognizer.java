@@ -65,6 +65,7 @@ class Recognizer {
             Instances unlabeled = buildInstances(1);
             instance.setDataset(unlabeled);
             imageToInstance(instance, image, Circle.class.getSimpleName());//set circle as default value to avoid null pointer
+
             double classValue = classifier.classifyInstance(instance);
             String classType = instance.classAttribute().value((int)classValue);
             return Class.forName("casual.canvas.entity.".concat(classType));

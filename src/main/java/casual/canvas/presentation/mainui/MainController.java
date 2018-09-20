@@ -23,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,8 @@ public class MainController {
     private DisplayedData displayedData = DisplayedData.getInstance();
     private BlService blService = BlFactory.getInstance().getBlService();
 
-    private Drawer drawer = new Drawer();
+    private LineDrawer lineDrawer = new LineDrawer();
+    private ShapeDrawer shapeDrawer = new ShapeDrawer();
     private Mediator mediator;//will be build with all-arg constructor
 
     @FXML
@@ -90,7 +92,7 @@ public class MainController {
 
         GraphicsContext context = canvas.getGraphicsContext2D();
         for (Shape shape : shapes) {//draw shape
-            shape.draw(context);
+            shapeDrawer.drawShape(context, shape);
         }
     }
 
@@ -100,7 +102,7 @@ public class MainController {
      */
     @FXML
     private void beginDraw(MouseEvent event){
-        drawer.beginDraw(event);
+        lineDrawer.beginDraw(event);
     }
 
     /**
@@ -109,7 +111,7 @@ public class MainController {
      */
     @FXML
     private void draw(MouseEvent event){
-        Line line = drawer.draw(event);
+        Line line = lineDrawer.draw(event);
         if (line != null){
             canvas.getGraphicsContext2D().strokeLine(line.getStartX(), line.getStartY(), line.getEndX(), line.getEndY());
         }
@@ -119,8 +121,16 @@ public class MainController {
      * stop drawing and manipulate the displayedData
      */
     @FXML
+    @SuppressWarnings("unchecked")
     private void stopDraw(){
-        displayedData.getDisplayedShapes().add(drawer.stopDraw());
+        Shape shape = lineDrawer.stopDraw();
+        Class subType = blService.recognizeShape(shape);
+        try {
+          Shape reshaped = (Shape)subType.getConstructor(Shape.class).newInstance(shape);
+          displayedData.getDisplayedShapes().add(reshaped);
+        } catch (NoSuchMethodException|IllegalAccessException|InstantiationException|InvocationTargetException e){
+            displayedData.getDisplayedShapes().add(shape);
+        }
     }
 
     /**

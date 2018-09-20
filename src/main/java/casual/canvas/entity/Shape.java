@@ -1,7 +1,6 @@
 package casual.canvas.entity;
 
 import casual.canvas.util.Color;
-import javafx.scene.canvas.GraphicsContext;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -29,16 +28,5 @@ public class Shape {
         this.color = color;
         this.lines = new ArrayList<>(lines.size());
         this.lines.addAll(lines);
-    }
-
-    public void draw(GraphicsContext context){
-        if (lines == null || lines.isEmpty()){//check
-            return;
-        }
-
-        context.setStroke(color.transform());
-        for (Line line : lines) {
-            context.strokeLine(line.getStartX(), line.getStartY(), line.getEndX(), line.getEndY());
-        }
     }
 }

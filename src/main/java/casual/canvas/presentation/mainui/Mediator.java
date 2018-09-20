@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * mediator class, responsible for the interaction of menus
  * @author miaomuzhi
  * @since 2018/9/16
  */

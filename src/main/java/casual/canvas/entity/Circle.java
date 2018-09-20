@@ -1,11 +1,13 @@
 package casual.canvas.entity;
 
 import casual.canvas.util.Color;
-import javafx.scene.canvas.GraphicsContext;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
 
 /**
  * blue indicates the Circle
@@ -35,11 +37,11 @@ public class Circle extends Shape {
         }
         centerX = sumX / lines.size();
         centerY = sumY / lines.size();
-    }
 
-    @Override
-    public void draw(GraphicsContext context) {
-        context.setStroke(color.transform());
-        context.strokeOval(centerX-radius, centerY-radius, radius, radius);
+        double distSum = 0;
+        for (Line line: lines){
+            distSum += sqrt(pow(line.getStartX()-centerX, 2) + pow(line.getStartY()-centerY, 2));
+        }
+        radius = distSum / lines.size();
     }
 }
