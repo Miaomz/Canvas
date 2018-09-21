@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * class to implement drawing function
+ * To implement drawing function
+ * lines are only temporarily drawn, and will be removed after the shape is made
  * @author miaomuzhi
  * @since 2018/9/16
  */

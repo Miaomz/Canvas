@@ -23,8 +23,8 @@
         <Menu mnemonicParsing="false" text="Edit">
             <CheckMenuItem fx:id="transformItem" mnemonicParsing="false" text="Transform shapes" selected="true" onAction="#changeTransformMode"/>
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem fx:id="undoItem" mnemonicParsing="false" text="Undo"/>
-            <MenuItem fx:id="redoItem" mnemonicParsing="false" text="Redo"/>
+            <MenuItem fx:id="undoItem" mnemonicParsing="false" text="Undo" onAction="#undo" disable="true"/>
+            <MenuItem fx:id="redoItem" mnemonicParsing="false" text="Redo" onAction="#redo" disable="true"/>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
             <MenuItem mnemonicParsing="false" text="About MyCanvas" />

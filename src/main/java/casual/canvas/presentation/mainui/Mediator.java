@@ -23,8 +23,9 @@ class Mediator {
 
     private Canvas canvas;
 
-    private static boolean hasFileName = false;
     private DisplayedData displayedData;
+    private Command command;
+
     private MenuItem createItem;
     private MenuItem openItem;
     private MenuItem saveItem;
@@ -32,6 +33,8 @@ class Mediator {
     private MenuItem revertItem;
     private MenuItem undoItem;
     private MenuItem redoItem;
+
+    private static boolean hasFileName = false;
 
     private static void fileNameInputted(){
         hasFileName = true;
@@ -43,6 +46,7 @@ class Mediator {
         saveItem.setDisable(isEmpty);
         saveAsItem.setDisable(isEmpty);
         revertItem.setDisable(isEmpty);
+        undoItem.setDisable(isEmpty);
     }
 
     public void saveMade(){
@@ -58,6 +62,10 @@ class Mediator {
                 changeFileName(stringList.get(0));
             }
         }
+    }
+
+    public void commandExecuted(){
+        redoItem.setDisable(command.getMemos().isEmpty());
     }
 
     /**

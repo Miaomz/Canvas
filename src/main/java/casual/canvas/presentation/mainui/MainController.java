@@ -31,6 +31,8 @@ import java.util.List;
 
 
 /**
+ * To bind the code with fxml
+ * main controller contains a lot of instances and actions, but most responsibilities will be assigned to other objects
  * @author miaomuzhi
  * @since 2018/9/14
  */
@@ -42,6 +44,7 @@ public class MainController {
     private LineDrawer lineDrawer = new LineDrawer();
     private ShapeDrawer shapeDrawer = new ShapeDrawer();
     private Mediator mediator;//will be build with all-arg constructor
+    private Command command = new Command();
 
     @FXML
     private Canvas canvas;
@@ -80,7 +83,7 @@ public class MainController {
             mediator.canvasChanged();
         });
 
-        mediator = new Mediator(canvas, displayedData, createItem, openItem, saveItem, saveAsItem, revertItem, undoItem, redoItem);
+        mediator = new Mediator(canvas, displayedData, command, createItem, openItem, saveItem, saveAsItem, revertItem, undoItem, redoItem);
     }
 
     /**
@@ -266,6 +269,18 @@ public class MainController {
     private void changeTransformMode(){
         shapeDrawer.changeState(transformItem.isSelected());
         sync();//rewrite the shapes
+    }
+
+    @FXML
+    private void undo(){
+        command.undo();
+        mediator.commandExecuted();
+    }
+
+    @FXML
+    private void redo(){
+        command.redo();
+        mediator.commandExecuted();
     }
 
     /**

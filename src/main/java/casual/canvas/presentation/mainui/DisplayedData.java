@@ -10,6 +10,7 @@ import static casual.canvas.util.ConstantString.EXTENSION;
 
 
 /**
+ * model
  * @author miaomuzhi
  * @since 2018/9/15
  */

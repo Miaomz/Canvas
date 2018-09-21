@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import java.util.List;
 
 /**
+ * To draw the shapes, including Shape's subclass
  * @author miaomuzhi
  * @since 2018/9/20
  */
