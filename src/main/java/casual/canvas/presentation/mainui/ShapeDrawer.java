@@ -17,6 +17,13 @@ public class ShapeDrawer {
     private boolean isRecognizing = true;
 
     /**
+     * user changed the mode
+     */
+    public void changeState(boolean isRecognizing){
+        this.isRecognizing = isRecognizing;
+    }
+
+    /**
      * draw shape according to the state of this Object
      * @param context graphic context of canvas
      * @param shape shape to be drawn
@@ -50,7 +57,7 @@ public class ShapeDrawer {
             return;
         }
 
-        context.setStroke(shape.getColor().transform());
+        context.setStroke(Color.BLACK);
         for (Line line : lines) {
             context.strokeLine(line.getStartX(), line.getStartY(), line.getEndX(), line.getEndY());
         }
@@ -65,7 +72,7 @@ public class ShapeDrawer {
         context.setStroke(shape.getColor().transform());
         double radius = circle.getRadius();
         //stroke oval
-        context.strokeOval(circle.getCenterX()-radius, circle.getCenterY()-radius, radius, radius);
+        context.strokeOval(circle.getCenterX()-radius, circle.getCenterY()-radius, radius*2, radius*2);
     }
 
     private void drawAsTriangle(GraphicsContext context, Shape shape){
@@ -73,7 +80,8 @@ public class ShapeDrawer {
             return;
         }
 
-        drawAsShape(context, shape);
+        context.setStroke(shape.getColor().transform());
+        shape.getLines().forEach(line -> context.strokeLine(line.getStartX(), line.getStartY(), line.getEndX(), line.getEndY()));
     }
 
     private void drawAsRectangle(GraphicsContext context, Shape shape){
@@ -81,6 +89,7 @@ public class ShapeDrawer {
             return;
         }
 
-        drawAsShape(context, shape);
+        context.setStroke(shape.getColor().transform());
+        shape.getLines().forEach(line -> context.strokeLine(line.getStartX(), line.getStartY(), line.getEndX(), line.getEndY()));
     }
 }

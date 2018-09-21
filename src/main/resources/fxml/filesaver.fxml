@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="120.0"
+            prefWidth="200.0" xmlns="http://javafx.com/javafx/9"
+            fx:controller="casual.canvas.presentation.fileui.SaverController">
+
+    <Label fx:id="info" alignment="CENTER" text="Do you want to save changes"
+           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0" />
+   <Button layoutX="22" layoutY="75" mnemonicParsing="false" text="Cancel" AnchorPane.leftAnchor="20" onAction="#cancel"/>
+   <Button layoutX="127" layoutY="75" mnemonicParsing="false" text="Confirm" AnchorPane.rightAnchor="20" onAction="#confirm"/>
+
+</AnchorPane>

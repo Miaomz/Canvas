@@ -4,7 +4,8 @@ import casual.canvas.bl.BlFactory;
 import casual.canvas.bl.BlService;
 import casual.canvas.entity.Line;
 import casual.canvas.entity.Shape;
-import casual.canvas.presentation.fileui.FileController;
+import casual.canvas.presentation.fileui.MakerController;
+import casual.canvas.presentation.fileui.SaverController;
 import casual.canvas.presentation.utilui.Popup;
 import casual.canvas.util.Color;
 import casual.canvas.util.LoggerUtil;
@@ -17,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
@@ -46,6 +48,9 @@ public class MainController {
 
     @FXML
     private Menu openRecent;
+
+    @FXML
+    private CheckMenuItem transformItem;
 
     //these menu items will be managed by other classes
     @FXML
@@ -139,13 +144,15 @@ public class MainController {
      */
     @FXML
     private void create(){
-        if (!displayedData.getDisplayedShapes().isEmpty()){//determine if or not to save the temp work
-            //TODO
+        //determine if or not to save the temp work
+        if (!displayedData.getDisplayedShapes().isEmpty()
+                && SaverController.initFileSaver()){//return toBeSaved
+            save();
         }
 
         revert();
         List<String> stringList = new ArrayList<>(1);
-        FileController.initFileMaker(stringList);
+        MakerController.initFileMaker(stringList);
         if (!stringList.isEmpty()){
             mediator.changeFileName(stringList.get(0));
         }
@@ -228,7 +235,7 @@ public class MainController {
     @FXML
     private void saveAs(){
         List<String> stringList = new ArrayList<>(1);
-        FileController.initFileMaker(stringList);
+        MakerController.initFileMaker(stringList);
         if (!stringList.isEmpty()){
             mediator.changeFileName(stringList.get(0));
         }
@@ -253,6 +260,12 @@ public class MainController {
     @FXML
     private void quit(){
         System.exit(0);
+    }
+
+    @FXML
+    private void changeTransformMode(){
+        shapeDrawer.changeState(transformItem.isSelected());
+        sync();//rewrite the shapes
     }
 
     /**

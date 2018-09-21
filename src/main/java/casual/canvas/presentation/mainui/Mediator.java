@@ -1,6 +1,6 @@
 package casual.canvas.presentation.mainui;
 
-import casual.canvas.presentation.fileui.FileController;
+import casual.canvas.presentation.fileui.MakerController;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.MenuItem;
 import lombok.AllArgsConstructor;
@@ -53,7 +53,7 @@ class Mediator {
 
         if (!hasFileName){
             List<String> stringList = new ArrayList<>(1);
-            FileController.initFileMaker(stringList);
+            MakerController.initFileMaker(stringList);
             if (!stringList.isEmpty()){
                 changeFileName(stringList.get(0));
             }

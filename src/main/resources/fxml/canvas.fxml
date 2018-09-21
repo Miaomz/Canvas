@@ -21,6 +21,8 @@
             <MenuItem mnemonicParsing="false" text="Quit" onAction="#quit"/>
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
+            <CheckMenuItem fx:id="transformItem" mnemonicParsing="false" text="Transform shapes" selected="true" onAction="#changeTransformMode"/>
+            <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="undoItem" mnemonicParsing="false" text="Undo"/>
             <MenuItem fx:id="redoItem" mnemonicParsing="false" text="Redo"/>
         </Menu>
