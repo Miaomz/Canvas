@@ -48,7 +48,7 @@ public class DataServiceImpl implements DataService{
         String path = PathUtil.getFilePath() + SLASH + fileName;
         String content = readFile(path);
         try {
-            List<Shape> shapes = JsonUtil.toArray(content, Shape.class);
+            List<Shape> shapes = JsonUtil.toShapesArray(content);
             if (shapes == null){//compare to null, empty list is better
                 shapes = new ArrayList<>();
             }
@@ -67,7 +67,7 @@ public class DataServiceImpl implements DataService{
         }
 
         String content = readFile(file.getPath());
-        List<Shape> shapes = JsonUtil.toArray(content, Shape.class);
+        List<Shape> shapes = JsonUtil.toShapesArray(content);
 
         if (shapes == null){
             return new ArrayList<>();
