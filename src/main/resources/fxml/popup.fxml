@@ -3,7 +3,8 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="70.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/9">
+<AnchorPane stylesheets="@../css/Goliath.css"
+            xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9">
       <Label fx:id="info" alignment="CENTER"
-             AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0" />
+             AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="5" AnchorPane.rightAnchor="5" AnchorPane.topAnchor="20"/>
 </AnchorPane>

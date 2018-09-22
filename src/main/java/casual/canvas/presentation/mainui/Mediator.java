@@ -3,12 +3,10 @@ package casual.canvas.presentation.mainui;
 import casual.canvas.presentation.fileui.MakerController;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.MenuItem;
+import javafx.stage.Stage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * mediator class, responsible for the interaction of menus
@@ -56,10 +54,9 @@ class Mediator {
         }
 
         if (!hasFileName){
-            List<String> stringList = new ArrayList<>(1);
-            MakerController.initFileMaker(stringList);
-            if (!stringList.isEmpty()){
-                changeFileName(stringList.get(0));
+            String fileName = MakerController.initFileMaker();
+            if (fileName != null){
+                changeFileName(fileName);
             }
         }
     }
@@ -70,11 +67,12 @@ class Mediator {
 
     /**
      * in order to make sure that the following manipulations will be done after change file name,
-     * no other setFileName should be applied
+     * no other setFileName should be applied, make the file virtually observable
      * @param s file name
      */
     public void changeFileName(String s){
         displayedData.setFileName(s);
+        ((Stage)canvas.getScene().getWindow()).setTitle(s);
         fileNameInputted();
     }
 }

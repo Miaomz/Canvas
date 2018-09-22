@@ -22,6 +22,10 @@ public class SaverController {
 
     private boolean toBeSaved = false;
 
+    /**
+     * initialize file saver window and get toBeSaved as return value
+     * @return whether temp work will be saved, false by default
+     */
     public static boolean initFileSaver(){
         try {
             FXMLLoader loader = new FXMLLoader(MakerController.class.getResource("/fxml/filesaver.fxml"));

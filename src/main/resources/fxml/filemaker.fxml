@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
 <GridPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="120.0"
+          stylesheets="@../css/Goliath.css"
           prefWidth="200.0" xmlns="http://javafx.com/javafx/9"
           fx:controller="casual.canvas.presentation.fileui.MakerController">
   <columnConstraints>
@@ -16,7 +17,7 @@
     <RowConstraints maxHeight="107.0" minHeight="10.0" prefHeight="73.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="71.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
   </rowConstraints>
-      <TextField fx:id="inputField" GridPane.columnIndex="1" text="unnamed">
+      <TextField fx:id="inputField" GridPane.columnIndex="1" text="unnamed" onAction="#confirm">
          <GridPane.margin>
             <Insets right="10.0" />
          </GridPane.margin>

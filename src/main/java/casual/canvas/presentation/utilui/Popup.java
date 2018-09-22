@@ -21,6 +21,11 @@ public class Popup {
 
     private Popup(){}
 
+    /**
+     * show a pop up to show a label
+     * @param info text of label
+     * @param color color of label
+     */
     public static void showPopup(String info, Color color){
         try {
             FXMLLoader loader = new FXMLLoader(Popup.class.getResource("/fxml/popup.fxml"));
@@ -30,6 +35,7 @@ public class Popup {
                     Label label = (Label) node;
                     label.setText(info);
                     label.setTextFill(color.transform());
+
                 }
             }
 

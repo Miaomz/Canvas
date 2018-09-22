@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
-import java.util.List;
 
 import static casual.canvas.util.ConstantString.EXTENSION;
 
@@ -24,10 +23,14 @@ public class MakerController {
     @FXML
     private TextField inputField;
 
-    private List<String> strings;//space to store the file
+    private String fileName;//file name to return
 
 
-    public static void initFileMaker(List<String> memorySpace){
+    /**
+     * initialize file maker window and get FileName as return value
+     * @return file name that user inputs, null if user cancels.
+     */
+    public static String initFileMaker(){
         try {
             FXMLLoader loader = new FXMLLoader(MakerController.class.getResource("/fxml/filemaker.fxml"));
             Parent root = loader.load();
@@ -38,11 +41,12 @@ public class MakerController {
             stage.initStyle(StageStyle.UTILITY);
             stage.setScene(scene);
 
-            loader.<MakerController>getController().strings = memorySpace;
-
+            MakerController controller = loader.getController();
             stage.showAndWait();
+            return controller.fileName;
         } catch (IOException e){
             LoggerUtil.getLogger().info(e);
+            return null;
         }
     }
 
@@ -60,7 +64,8 @@ public class MakerController {
         if (!input.endsWith(EXTENSION)){
             input = input + EXTENSION;
         }
-        strings.add(input);
+
+        this.fileName = input;
         ((Stage)inputField.getScene().getWindow()).close();
     }
 }

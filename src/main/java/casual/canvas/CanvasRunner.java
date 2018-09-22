@@ -16,7 +16,7 @@ public class CanvasRunner extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/canvas.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        primaryStage.setTitle("My Canvas");
+        primaryStage.setTitle("unnamed");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

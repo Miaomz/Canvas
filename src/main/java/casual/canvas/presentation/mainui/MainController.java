@@ -41,10 +41,13 @@ public class MainController {
     private DisplayedData displayedData = DisplayedData.getInstance();
     private BlService blService = BlFactory.getInstance().getBlService();
 
+    //objects to which MainController will assign responsibilities to
     private LineDrawer lineDrawer = new LineDrawer();
     private ShapeDrawer shapeDrawer = new ShapeDrawer();
     private Mediator mediator;//will be build with all-arg constructor
     private Command command = new Command();
+
+    private double strokeWidth = 1;//default value
 
     @FXML
     private Canvas canvas;
@@ -76,7 +79,7 @@ public class MainController {
      */
     public void initialize(){
         canvas.getGraphicsContext2D().setStroke(Color.BLACK.transform());
-        canvas.getGraphicsContext2D().setLineWidth(1);
+        canvas.getGraphicsContext2D().setLineWidth(strokeWidth);
 
         displayedData.getDisplayedShapes().addListener((ListChangeListener.Change<? extends Shape> c) -> {
             sync();
@@ -154,10 +157,9 @@ public class MainController {
         }
 
         revert();
-        List<String> stringList = new ArrayList<>(1);
-        MakerController.initFileMaker(stringList);
-        if (!stringList.isEmpty()){
-            mediator.changeFileName(stringList.get(0));
+        String fileName = MakerController.initFileMaker();
+        if (fileName != null){
+            mediator.changeFileName(fileName);
         }
     }
 
@@ -237,10 +239,9 @@ public class MainController {
 
     @FXML
     private void saveAs(){
-        List<String> stringList = new ArrayList<>(1);
-        MakerController.initFileMaker(stringList);
-        if (!stringList.isEmpty()){
-            mediator.changeFileName(stringList.get(0));
+        String fileName = MakerController.initFileMaker();
+        if (fileName != null){
+            mediator.changeFileName(fileName);
         }
 
         save();
@@ -256,9 +257,8 @@ public class MainController {
 
     @FXML
     private void preference(){
-        Popup.showPopup("TODO", Color.BLACK);
+        //TODO set stroke width and something else
     }
-
 
     @FXML
     private void quit(){
@@ -282,6 +282,13 @@ public class MainController {
         command.redo();
         mediator.commandExecuted();
     }
+
+    @FXML
+    private void showAboutInfo(){
+        Popup.showPopup("Mycanvas supports image painting and automatic Detection.\n" +
+                "All paint must be drawn without any interruption.", Color.BLACK);
+    }
+
 
     /**
      * utility function
