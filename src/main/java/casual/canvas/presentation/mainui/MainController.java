@@ -6,6 +6,7 @@ import casual.canvas.entity.Line;
 import casual.canvas.entity.Shape;
 import casual.canvas.presentation.fileui.MakerController;
 import casual.canvas.presentation.fileui.SaverController;
+import casual.canvas.presentation.preferenceui.PreferenceController;
 import casual.canvas.presentation.utilui.Popup;
 import casual.canvas.util.Color;
 import casual.canvas.util.LoggerUtil;
@@ -257,7 +258,12 @@ public class MainController {
 
     @FXML
     private void preference(){
-        //TODO set stroke width and something else
+        Integer width = PreferenceController.initPreferenceController();
+        if (width != null){
+            this.strokeWidth = width;
+            canvas.getGraphicsContext2D().setLineWidth(strokeWidth);
+            sync();
+        }
     }
 
     @FXML

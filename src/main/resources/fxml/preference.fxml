@@ -3,18 +3,17 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 <GridPane hgap="5.0" vgap="5.0"
           stylesheets="@../css/Goliath.css"
-          xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+          xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="casual.canvas.presentation.preferenceui.PreferenceController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
@@ -23,30 +22,23 @@
             <Insets left="10.0" />
          </GridPane.margin>
       </Text>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Workspace" GridPane.rowIndex="1">
-         <GridPane.margin>
-            <Insets left="10.0" />
-         </GridPane.margin>
-      </Text>
-      <Button mnemonicParsing="false" text="Cancel" GridPane.rowIndex="2">
+      <Button mnemonicParsing="false" onAction="#cancel" text="Cancel" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </Button>
-      <Button mnemonicParsing="false" text="Confirm" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <Button mnemonicParsing="false" onAction="#confirm" text="Confirm"
+              GridPane.columnIndex="1" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
-         </GridPane.margin></Button>
-      <Slider blockIncrement="1.0" max="10.0" min="1.0" minWidth="100.0" GridPane.columnIndex="1">
+         </GridPane.margin>
+      </Button>
+      <Slider fx:id="strokeWidth" blockIncrement="1.0" max="10.0" min="1.0" minWidth="100.0"
+              GridPane.columnIndex="1">
          <GridPane.margin>
             <Insets right="10.0" />
          </GridPane.margin>
       </Slider>
-      <TextField editable="false" minWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <GridPane.margin>
-            <Insets right="10.0" />
-         </GridPane.margin>
-      </TextField>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
