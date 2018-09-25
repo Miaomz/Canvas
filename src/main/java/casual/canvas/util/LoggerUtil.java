@@ -12,7 +12,7 @@ import java.util.logging.SimpleFormatter;
  */
 public class LoggerUtil {
     private static LoggerUtil loggerUtil;
-    private Logger logger;
+    private final Logger logger;
 
     private LoggerUtil(){
         this.logger = Logger.getAnonymousLogger();

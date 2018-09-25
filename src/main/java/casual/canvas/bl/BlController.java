@@ -14,8 +14,8 @@ import java.util.List;
  */
 public class BlController implements BlService {
 
-    private DataService dataService = DataFactory.getDataFactory().getDataService();
-    private Recognizer recognizer = new Recognizer();
+    private final DataService dataService = DataFactory.getDataFactory().getDataService();
+    private final Recognizer recognizer = new Recognizer();
 
     @Override
     public ResultMessage savePainting(List<Shape> shapes, String fileName) {
@@ -35,11 +35,6 @@ public class BlController implements BlService {
     @Override
     public List<File> getRecentFiles() {
         return dataService.getRecentFiles();
-    }
-
-    @Override
-    public List<Shape> recognizeShapes(List<Shape> shapes) {
-        return recognizer.recognizeShapes(shapes);
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.List;
  * @author miaomuzhi
  * @since 2018/9/20
  */
-public class ShapeDrawer {
+class ShapeDrawer {
 
     //state
     private boolean isRecognizing = true;

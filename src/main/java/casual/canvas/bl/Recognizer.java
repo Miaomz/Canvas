@@ -4,6 +4,7 @@ import casual.canvas.data.DataFactory;
 import casual.canvas.data.DataService;
 import casual.canvas.entity.*;
 import casual.canvas.util.LoggerUtil;
+import casual.canvas.util.ResultMessage;
 import weka.classifiers.Classifier;
 import weka.classifiers.meta.MultiClassClassifier;
 import weka.core.Attribute;
@@ -35,29 +36,6 @@ class Recognizer {
         train();
     }
 
-    List<Shape> recognizeShapes(List<Shape> shapes) {
-        List<Shape> modifiedShapes = new ArrayList<>(shapes.size());
-        for (Shape shape : shapes) {
-            Class c = recognizeShape(shape);
-            switch (c.getSimpleName()){
-                case "Circle":
-                    modifiedShapes.add(new Circle(shape));
-                    break;
-                case "Rectangle":
-                    modifiedShapes.add(new Rectangle(shape));
-                    break;
-                case "Triangle":
-                    modifiedShapes.add(new Triangle(shape));
-                    break;
-
-                    default:
-                        modifiedShapes.add(shape);
-                        break;
-            }
-        }
-        return modifiedShapes;
-    }
-
     Class recognizeShape(Shape shape) {
         try {
             int[][] image = getImageFromShape(shape);
@@ -75,6 +53,9 @@ class Recognizer {
         }
     }
 
+    /**
+     * train method, but it will not called because there is already a saved model
+     */
     private void train(){
         Classifier savedClassifier = dataService.loadClassifier();
         if (savedClassifier != null){
@@ -83,21 +64,9 @@ class Recognizer {
         }
 
         //load data
-        File triFile;
-        File cirFile;
-        File rectFile;
-        try {
-             triFile = new File(getClass().getResource("/dataset/triangle.mcv").toURI());
-             cirFile = new File(getClass().getResource("/dataset/circle.mcv").toURI());
-             rectFile = new File(getClass().getResource("/dataset/rectangle.mcv").toURI());
-        } catch (URISyntaxException e){
-            LoggerUtil.getLogger().warning(e);
-            return;
-        }
-
-        List<Shape> triangles = dataService.loadPainting(triFile);
-        List<Shape> circles = dataService.loadPainting(cirFile);
-        List<Shape> rectangles = dataService.loadPainting(rectFile);
+        List<Shape> triangles = loadData("/dataset/triangle.mcv");
+        List<Shape> circles = loadData("/dataset/circle.mcv");
+        List<Shape> rectangles = loadData("/dataset/rectangle.mcv");
 
         //build instances
         Instances instances = buildInstances(triangles.size()+circles.size()+rectangles.size());
@@ -109,7 +78,10 @@ class Recognizer {
 
         try {
             classifier.buildClassifier(instances);
-            dataService.saveClassifier(classifier);
+            ResultMessage message = dataService.saveClassifier(classifier);
+            if (message == ResultMessage.FAILURE){
+                LoggerUtil.getLogger().info(new Exception("fail to save model"));
+            }
         } catch (Exception e){
             LoggerUtil.getLogger().warning(e);
         }
@@ -123,6 +95,25 @@ class Recognizer {
     int[][] getImageFromShape(Shape shape){
         List<Line> lines = normalizeLines(shape);
         return linesToImage(lines);
+    }
+
+    /**
+     * load train data
+     * @param location a mcv file in train data folder
+     * @return list of shapes
+     */
+    List<Shape> loadData(String location){
+        if (!location.startsWith("/dataset/")){
+            LoggerUtil.getLogger().warning(new Exception("it is not train data"));
+        }
+
+        try {
+            File file = new File(getClass().getResource(location).toURI());
+            return dataService.loadPainting(file);
+        } catch (URISyntaxException e){
+            LoggerUtil.getLogger().warning(e);
+            return new ArrayList<>();
+        }
     }
 
     /**
@@ -296,6 +287,12 @@ class Recognizer {
         }
     }
 
+    /**
+     * build a instance by given object, bitmap and class
+     * @param instance instance to be built
+     * @param image bitmap of image
+     * @param className class of instance
+     */
     private void imageToInstance(Instance instance, int[][] image, String className){
         for (Integer i = 0; i < MAT_LENGTH*MAT_LENGTH; i++) {
             instance.setValue(i, image[i/MAT_LENGTH][i%MAT_LENGTH] == 1 ? "one" : "zero");

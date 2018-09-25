@@ -44,13 +44,6 @@ public interface BlService {
     List<File> getRecentFiles();
 
     /**
-     * turn shapes into different types
-     * @param shapes raw shapes
-     * @return list of shapes which could be subclass
-     */
-    List<Shape> recognizeShapes(List<Shape> shapes);
-
-    /**
      * recognize single shape
      * @param shape Shape instance
      * @return  which subclass type should it be turned into

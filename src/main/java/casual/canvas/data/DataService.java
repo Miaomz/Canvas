@@ -21,7 +21,16 @@ public interface DataService {
 
     List<File> getRecentFiles();
 
+    /**
+     * save a built classifier
+     * @param classifier built classifier
+     * @return result message
+     */
     ResultMessage saveClassifier(Classifier classifier);
 
+    /**
+     * load saved classifier
+     * @return classifier
+     */
     Classifier loadClassifier();
 }

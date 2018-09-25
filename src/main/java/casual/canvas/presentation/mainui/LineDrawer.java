@@ -22,7 +22,7 @@ class LineDrawer {
 
     //data to draw a shape
     private boolean isDrawing = false;
-    private List<Line> linesCache = new ArrayList<>(100);//average capacity
+    private final List<Line> linesCache = new ArrayList<>(100);//average capacity
 
     void beginDraw(MouseEvent event){
         isDrawing = true;

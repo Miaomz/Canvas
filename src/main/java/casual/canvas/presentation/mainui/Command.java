@@ -16,8 +16,8 @@ import java.util.List;
 @Getter
 class Command {
 
-    private List<Memo> memos = new ArrayList<>();
-    private DisplayedData displayedData = DisplayedData.getInstance();
+    private final List<Memo> memos = new ArrayList<>();
+    private final DisplayedData displayedData = DisplayedData.getInstance();
 
     void undo(){
         if (displayedData.getDisplayedShapes().isEmpty()){//precondition

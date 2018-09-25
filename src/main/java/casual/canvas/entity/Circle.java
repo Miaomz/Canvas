@@ -44,4 +44,6 @@ public class Circle extends Shape {
         }
         radius = distSum / lines.size();
     }
+
+
 }

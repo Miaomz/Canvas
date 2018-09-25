@@ -39,14 +39,14 @@ import java.util.List;
  */
 public class MainController {
 
-    private DisplayedData displayedData = DisplayedData.getInstance();
-    private BlService blService = BlFactory.getInstance().getBlService();
+    private final DisplayedData displayedData = DisplayedData.getInstance();
+    private final BlService blService = BlFactory.getInstance().getBlService();
 
     //objects to which MainController will assign responsibilities to
-    private LineDrawer lineDrawer = new LineDrawer();
-    private ShapeDrawer shapeDrawer = new ShapeDrawer();
+    private final LineDrawer lineDrawer = new LineDrawer();
+    private final ShapeDrawer shapeDrawer = new ShapeDrawer();
     private Mediator mediator;//will be build with all-arg constructor
-    private Command command = new Command();
+    private final Command command = new Command();
 
     private double strokeWidth = 1;//default value
 

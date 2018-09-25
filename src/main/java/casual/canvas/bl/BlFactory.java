@@ -8,7 +8,7 @@ import lombok.Getter;
  */
 @Getter
 public class BlFactory {
-    private static BlFactory ourInstance = new BlFactory();
+    private static final BlFactory ourInstance = new BlFactory();
     private BlService blService = new BlController();
 
     private BlFactory() {}
